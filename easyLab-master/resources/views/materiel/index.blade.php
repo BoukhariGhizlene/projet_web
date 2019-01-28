@@ -9,7 +9,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('dashboard')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active"><a href="{{url('materiel')}}">Materiels</a></li>
+        <li class="active">Materiels</a></li>
       </ol>
 
 @endsection
@@ -59,6 +59,12 @@
           <a href="{{url('projets')}}">
             <i class="fa fa-folder-open-o"></i> 
             <span>Projets</span>
+          </a>
+        </li>
+          <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
           </a>
         </li>
 
@@ -122,12 +128,14 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table  class="table table-bordered table-striped">
+
+              <div class="tab-pane" id="timeline">
+                 <div class="box-body" style="padding-top: 30px;">
+              <table  id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>nom</th>
                   <th>categorie</th>
-                  <th>Affecter a </th>
                   <th>option</th>
                 </tr>
                 </thead>
@@ -142,7 +150,6 @@
                   @endif
                    @endforeach
 
-                  <td>{{$materiel->affecter}}</td>
                   
                      
                   <td>  <div class="btn-group">
@@ -155,9 +162,9 @@
                               <i class="fa fa-eye"></i>
                             </a>
                             
-                            <a href="{{url('materiel/'.$materiel->id.'/edit')}}" class="btn btn-default">
-                              <i class="fa fa-edit"></i>
-                            </a>
+                             <a href="{{ url('materiel/'.$materiel->id.'/editt')}}" class="btn btn-default">
+                        <i class="fa fa-edit"></i>
+                      </a>
                            
                             
                             <!-- <button  type="submit" class="btn btn-danger ">
@@ -198,12 +205,11 @@
                 <tr>
                   <th>nom</th>
                   <th>categorie</th>
-                  <th>Affecter a</th>
                   <th>option</th>
                 </tr>
                 
                 </tfoot>
-              </table>
+              </table></div></div>
             </div>
             <!-- /.box-body -->
           </div>

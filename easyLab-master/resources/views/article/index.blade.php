@@ -1,10 +1,135 @@
-
- @extends('layouts.master')
+@extends('layouts.master')
 
  @section('title','LRI | Liste des articles')
 
 @section('header_page')
+<style>
+  table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+</style>
+   <script type="text/javascript">
+window.onload = function () {
+  var chart = new CanvasJS.Chart("chartContainer",
+  {
+    title:{
+      text: "numbre d'article publié"
+    },
+    legend: {
+      maxWidth: 350,
+      itemWidth: 120
+    },
+    data: [
+    {
+      type: "pie",
+      showInLegend: true,
+      legendText: "{indexLabel}",
+      dataPoints: [
+                @foreach($var as $varss)
+        { y: {{$varss->total}}, indexLabel: "{{$varss->type}}" },
+                @endforeach
+                
+      ]
+    }
+    ]
+  });
+  chart.render();
+        var chart1 = new CanvasJS.Chart("chartContainer1",
+  {
+    title:{
+      text: "Nombre des articles publies par l'année"
+    },
+    axisY:{
+      title:"Coal (bn tonnes)",
+      valueFormatString: "#0.#,.",
+    },
+    data: [
+     @foreach($var2 as $va)
+            {
+    
+                
+                type: "stackedColumn",
+      legendText: "Anthracite & Bituminous",
+      showInLegend: "true",
+      dataPoints: [ 
+             @foreach($vars as $varss)
+            @if($varss->annee==$va->annee)
+             {  y: {{$va->total}} , label:"{{$va->type}}" },
+            @else
+            {  y:0 , label:" " },
+            @endif
+            @endforeach
+            ]  
+    },@endforeach
+                                   
+            {
+    
+                
+                type: "stackedColumn",
+      legendText: "Anthracite & Bituminous",
+      showInLegend: "true",
+      dataPoints: [ 
+             @foreach($vars as $varss)
+             {  y:0, label:"{{$varss->annee}}" },
+           
+            @endforeach
+            ]  
+    }
+    ]
+  });
+  chart1.render();
+         var chart3 = new CanvasJS.Chart("chartContainer3",
+    {
+      title:{
+        text: "Nombre des article publie par chaque équipe chaque année"
+      }, 
+       
+    data: [
+     @foreach($var3 as $va)
+            {
+    
+                
+                type: "bar",
+      dataPoints: [ 
+             @foreach($vars4 as $varss)
+            @if($varss->annee==$va->annee)
+             {  y: {{$va->total}} , label:"{{$va->achronymes}}" },
+            @else
+            {  y:0 , label:" " },
+            @endif
+            @endforeach
+            ]  
+    },@endforeach
+                                   
+            {
+    
+                
+                type: "bar",
+      
+      dataPoints: [ 
+             @foreach($vars4 as $varss)
+             {  y:0, label:"{{$varss->annee}}" },
+           
+            @endforeach
+            ]  
+    }
+    ]
+  });
+     
+
+chart3.render();
+}
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
       <h1>
         Articles
         <small>Liste</small>
@@ -110,7 +235,7 @@
                   <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody>
+                <body>
                   @foreach($articles as $article)
                   <tr>
                     <td>{{$article->type}}</td>
@@ -180,10 +305,85 @@
                 </tfoot>
               </table>
             </div>
+            <br><br><br>
+      <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">numbre d'article publié</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <table>
+        <th>type</th><th>le nombre d'article </th>
+         @foreach($var as $varss)
+<tr><td>{{$varss->type}}</td><td>{{$varss->total}}</td></tr>
+                @endforeach
+          
+       
+    </table>
+ <br><br><br><br>
+    <div id="chartContainer" style="height: 300px; width: 100%;">
+    </div>
+    </div>
+<br><br><br>
+      <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Nombre des articles publies par l'année </h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+       <table>
+        <th>l'année</th><th>l'annee</th><th>le nombre d'article </th>
+         @foreach($var2 as $varss)
+<tr><td>{{$varss->type}}</td><td>{{$varss->annee}}</td><td>{{$varss->total}}</td></tr>
+                @endforeach
+          
+       
+    </table>
+   <br><br><br><br>
+    
+    <div id="chartContainer1" style="height: 300px; width: 100%;">
+    </div>
+    </div>
+    <br><br><br>
+      <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Nombre des article publie par chaque équipe chaque année</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <table> 
+          
+        <tr><th >équipe</th><th>annee</th> <th>numbre d'article</th></tr>
+        @foreach($var3 as $varss)
+        <tr><td>{{ $varss->achronymes }}</td><td>{{$varss->annee}}</td><td>{{$varss->total}}</td></tr>
+         @endforeach
+        </table>
+          <br><br><br><br>
+    
+   
+    
+    <div id="chartContainer3" style="height: 300px; width: 100%;">
+    </div>
+</div>
+          </div>
             <!-- /.box-body -->
+            
           </div>
         
       </div>
       
     </div>
+
  @endsection

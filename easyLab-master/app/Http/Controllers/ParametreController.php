@@ -37,6 +37,7 @@ class ParametreController extends Controller
             $labo->logo = '/uploads/photo/'.$file_name;
         }
         $labo->nom = $request->input('nom');
+        $labo->presentation = $request->input('presentation');
 
         $labo->save();
 

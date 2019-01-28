@@ -4,6 +4,62 @@
 
 @section('header_page')
 
+<style>  table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+</style>
+<script type="text/javascript">
+  window.onload = function () {
+          var chartp = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "le projets par equipes"
+      }, 
+       
+		data: [
+		 @foreach($projet_equipe as $va)
+            {
+		
+                
+              	type: "bar",
+			dataPoints: [ 
+             @foreach($projet_equipe1 as $varss)
+            @if($varss->projet_id==$va->id)
+             {  y: {{$varss->total}} , label:"{{$varss->achronymes}}" },
+            @endif
+            @endforeach
+            ]  
+		},@endforeach
+                                   
+            {
+		
+                
+              	type: "bar",
+			
+			dataPoints: [ 
+               @foreach($projet_equipe as $va)                      
+              {  y:0 , label:"{{$va->id}}" },
+                     @endforeach
+            ]  
+		}
+		]
+	});
+     
+chartp.render();
+
+
+     }
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
       <h1>
         Projets
       </h1>
@@ -133,7 +189,7 @@
 
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
-                      <a href="{{ url('projets/'.$projet->id.'/details')}} " class="btn btn-info">
+                      <a href="{{ url('projets/'.$projet->id.'/detail')}} " class="btn btn-info">
                         <i class="fa fa-eye"></i>
                       </a>
                       @if(Auth::user()->role->nom != 'membre' )
@@ -194,6 +250,38 @@
                 </tfoot>
               </table>
             </div>
+<br><br><br><br>
+ <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">les projets par equipes</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+     <br><br><br>
+<table> 
+     
+                                  
+                                    
+        <tr><th >équipe</th><th>code de projet</th> <th>fictif</th></tr>
+        @foreach($projet_equipe1 as $varss)
+        <tr><td>{{ $varss->achronymes }}</td><td>{{$varss->projet_id}}</td><td>{{$varss->total}}</td></tr>
+         @endforeach
+        
+        </table>
+     
+    <br>
+    <br>
+    <br>
+    <br>
+   
+    
+    <div id="chartContainer" style="height: 300px; width: 100%;">
+    </div>
+</div>
             <!-- /.box-body -->
           </div>
         

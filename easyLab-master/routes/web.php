@@ -20,18 +20,14 @@ use Illuminate\Support\Facades\Input;
 Route::get('/Acceuil/login', function () {
     return view('auth/login');
 });
-Route::get('/', function () {
-    return view('Acceuil');
-});
+
 Route::get('/Acceuil/contact', function () {
     return view('Contacts');
 });
 Route::get('/Acceuil/Equipe/GL/{achronymes}', function () {
     return view('equipeGL');
 });
-Route::get('/Acceuil/Presentation', function () {
-    return view('presentation');
-});
+
 Route::get('/Acceuil/Membre', function () {
     return view('Profile Membre');
 });
@@ -42,12 +38,29 @@ Route::get('/Acceuil/Projet', function () {
     return view('projet');
 });
 
+Route::get('partennaires','PartennaireController@index');
+Route::post('partennaires','PartennaireController@store');
+Route::post('partennaires/novC','PartennaireController@Contstore');
+Route::get('partennaires/{id}/details','PartennaireController@details');
+Route::get('partennaires/partenaire_create','PartennaireController@create');
+
+//Route::get('/partennaires/{id}/details','PartennaireController@ShowDetails');
+Route::get('partennaires/{id}/edit','PartennaireController@edit');
+Route::put('partennaires/{id}','PartennaireController@update');
+Route::delete('partennaires/{id}','PartennaireController@destroy');
+
+
+Route::delete('partennaires/{idP}/contacts/{id}','PartennaireController@Contdestroy');
+Route::get('contacts/{id}/details','PartennaireController@Contdetails');
+Route::get('partennaire/{id}/contacts/create','PartennaireController@ContactCreate');
+
 
 Route::get('dashboard','dashController@index');
 Route::get('parametre','ParametreController@create');
 Route::post('parametre','ParametreController@store');
 
 Route::post('actualite/{id}','ActualitesController@store');
+Route::delete('{idM}/actualite/{id}','ActualitesController@destroy');
 
 Route::get('materiel','MaterielController@index');
 Route::get('materiel/create','MaterielController@create');
@@ -58,7 +71,7 @@ Route::put('materiel/{Mid}/AffectationEquipe','MaterielController@storeAffectati
 Route::put('materiel/{Mid}/AffectationUser','MaterielController@storeAffectationUser');
 Route::delete('materiel/{id}','MaterielController@destroy');
 Route::get('materiel/{id}/details','MaterielController@details');
-
+Route::get('materiel/{id}/editt','MaterielController@edit');
 
 Route::get('theses','TheseController@index');
 Route::get('theses/create','TheseController@create');
@@ -103,7 +116,7 @@ Route::get('/presentation', function () {
 Route::get('projets','ProjetController@index');
 Route::get('projets/create','ProjetController@create');
 Route::post('projets','ProjetController@store');
-Route::get('projets/{id}/details','ProjetController@details');
+Route::get('projets/{id}/detail','ProjetController@details');
 Route::get('projets/{id}/edit','ProjetController@edit');
 Route::put('projets/{id}','ProjetController@update');
 Route::delete('projets/{id}','ProjetController@destroy');
@@ -115,11 +128,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/Acceuil/Equipe/{achronymes}','FrontOfficeController@ShowEquipeDetails');
+Route::get('/Acceuil/Partenaire/{id}','FrontOfficeController@ShowPartenaireDetails');
 Route::get('/membre/{id}','FrontOfficeController@ShowUserDetails');
 Route::get('/projets/{id}/details','FrontOfficeController@ShowProjetDetails');
 Route::get('/actualité','FrontOfficeController@ShowActualiteDetails');
-
-
+Route::get('/Acceuil/Presentation','FrontOfficeController@ShowPresentationDetails');
+Route::get('/','FrontOfficeController@ShowHome');
 
 Route::get('/statistics',function(){
 

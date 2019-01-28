@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Article;
 use App\User;
@@ -26,7 +27,43 @@ class ArticleController extends Controller
 
     	$labo = Parametre::find('1');
     	$listarticle = Article::all();
-    	return view('article.index' , ['articles' => $listarticle] ,['labo'=>$labo]);
+        $var = \DB::table('articles') ->groupBy('type')
+        ->select( \DB::raw('count(type) as total,type'))
+         ->orderBy('annee')
+        ->get();
+  
+        
+    $var2 = \DB::table('articles') ->groupBy('annee','type')
+        ->select( \DB::raw('count(type) as total,annee,type'))
+         ->orderBy('annee')
+        ->get();
+     $vars = \DB::table('articles') ->groupBy('annee')
+       ->select( \DB::raw('annee'))
+        ->orderBy('annee')
+        ->get();
+         $var3 = \DB::table('article_user') ->groupBy ('annee','achronymes')
+        
+        ->join('users', 'article_user.user_id', '=', 'users.id')
+        ->join('articles', 'articles.id', '=', 'article_user.article_id')
+        ->join('equipes', 'users.equipe_id', '=', 'equipes.id')
+        ->select( \DB::raw('count(annee)as total,annee ,achronymes'))
+        ->get();
+         $vars4 = \DB::table('article_user') ->groupBy ('annee')
+        
+        ->join('users', 'article_user.user_id', '=', 'users.id')
+        ->join('articles', 'articles.id', '=', 'article_user.article_id')
+        
+        ->select( \DB::raw('annee '))
+        ->get();
+
+    	return view('article.index' )->with([
+            'var' => $var,
+            'var3' => $var3,
+            'vars4' => $vars4,
+            'articles' => $listarticle,
+            'labo'=>$labo,
+            'var2' => $var2,
+            'vars' => $vars]);; 
 
     }
 
@@ -42,6 +79,7 @@ class ArticleController extends Controller
 	 		'labo'=>$labo,
 	 	]);;
     }
+   
 
     //affichage de formulaire de creation d'articles
 	 public function create()

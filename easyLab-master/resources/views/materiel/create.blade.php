@@ -5,13 +5,13 @@
 @section('header_page')
 
       <h1>
-        Membres
+        Materiel
         <small>Nouveau</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('dashboard')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-        <li><a href="{{url('materiel')}}">Materiels</a></li>
-        <li class="active">Nouveau</li>
+        <li><a href="{{url('materiel')}}">materiel</a></li>
+        <li class="active">New</li>
       </ol>
 
 @endsection
@@ -64,10 +64,20 @@
             <span>Projets</span>
           </a>
         </li>
-        
+          <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
+          </a>
+        </li>
        
         
           @if(Auth::user()->role->nom == 'admin' )
+          <li>
+          <a href="{{url('materiel')}}">
+            <i class="fa fa-suitcase"></i> 
+            <span>matériel</span></a>
+          </li>
 
           <li>
           <a href="{{url('parametre')}}">
@@ -82,11 +92,11 @@
  <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Select2</h3>
+          <h3 class="box-title">Categorie</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+           
           </div>
         </div>
         <!-- /.box-header -->
@@ -110,7 +120,7 @@
               <!-- /.form-group -->
               <div class="col-md-6">
                  <div class="form-group">
-                <button type="submit" class="btn btn-block btn-success btn-flat">Submit</button>
+                <button type="submit" class="btn btn-block btn-success btn-flat">Ajouter</button>
               </div>
               <!-- /.form-group -->
             </div></form>
@@ -126,7 +136,7 @@
 
 <!-- /.box -->
           <!-- general form elements disabled -->
-          <div class="box box-warning">
+          <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">General Elements</h3>
             </div>

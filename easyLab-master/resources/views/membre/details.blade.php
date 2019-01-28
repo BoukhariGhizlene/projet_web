@@ -63,9 +63,19 @@
           </a>
         </li>
         
-       
+         <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
+          </a>
+        </li>
         
           @if(Auth::user()->role->nom == 'admin' )
+          <li>
+          <a href="{{url('materiel')}}">
+            <i class="fa fa-suitcase"></i> 
+            <span>matériel</span></a>
+          </li>
 
           <li>
           <a href="{{url('parametre')}}">
@@ -500,9 +510,7 @@
                 <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
                         title="Collapse">
                   <i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
-                        title="Remove">
-                  <i class="fa fa-times"></i></button>
+                
               </div>
               <!-- /. tools -->
             </div>
@@ -525,21 +533,55 @@
                         <label class="col-md-1 control-label">Titre:</label>  
                         <div class="col-md-9 inputGroupContainer ">
                           <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
                             <input  name="titre" placeholder="Prénom" class="form-control"  type="text" value="Titre ..."> 
                               
                           </div>
                             <span class="help-block">
                               
-                            </span>
+                            </span></div></div>
+                            <br>
 
-                            <div class="col-md-8 inputGroupContainer">
-                              <input name="img" type="file" >
+                             <div class="form-group">
+                        <label class="col-md-1 control-label">Image:</label>  
+                        <div class="col-md-9 inputGroupContainer ">
+                          <div class="input-group">
+                             <span class="input-group-addon"><i class="fa fa-picture-o"></i></span>
+                              <input name="img" type="file" class="form-control" >
                              </div>
-                             <p>   <textarea id="editor1" name="contenu" rows="10" cols="80"  >
-                    </textarea></p>
-                        </div>
-                      </div>
+                            
+                            <span class="help-block">
+                              
+                            </span></div></div>
+                            <br>
+                             <div class="form-group">
+                        <label class="col-md-1 control-label">Resume:</label>  
+                        <div class="col-md-9 inputGroupContainer ">
+                          <div class="input-group">
+                             <span class="input-group-addon"><i class="fa fa-file-text-o"></i></span>
+                              <textarea id="editor1" name="resume" rows="4" cols="73"  >
+                    </textarea>
+                     </div>
+                           
+                            <span class="help-block">
+                              
+                            </span> </div></div>
+                            <br>
+                            <br>
+                             <div class="form-group">
+                        <label class="col-md-1 control-label">Contenu:</label>  
+                        <div class="col-md-9 inputGroupContainer ">
+                          <div class="input-group">
+                             <span class="input-group-addon"><i class="fa fa-file-text"></i></span>
+                              <textarea id="editor1" name="contenu" rows="10" cols="73"  >
+                    </textarea>
+                     </div>
+                           
+                            <span class="help-block">
+                              
+                            </span> </div></div>
+                            <br>
+                       
 
 
 
@@ -580,7 +622,34 @@
                   <i class="fa fa-circle-o"></i></button>
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
-               <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>-->
+                 <a href="#supprimer{{$actualite->id}}Modal" role="button" class="btn btn-box-tool" data-toggle="modal">
+                 <i class="fa fa-times"></i></a>
+                 <!--debut suprimer-->
+                
+                      <div class="modal fade" id="supprimer{{$actualite->id}}Modal" tabindex="-1" role="dialog" aria-labelledby="supprimer{{ $actualite->id }}ModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                    <!--   <h5 class="modal-title" id="supprimer{{ $membre->id }}ModalLabel">Supprimer</h5> -->
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body text-center">
+                                      Voulez-vous vraiment effectuer la suppression ? 
+                                  </div>
+                                  <div class="modal-footer">
+                                      <form class="form-inline" action="{{ url($membre->id.'/actualite/'.$actualite->id)}}"  method="POST">
+                                          @method('DELETE')
+                                          @csrf
+                                      <button type="button" class="btn btn-light" data-dismiss="modal">Non</button>
+                                          <button type="submit" class="btn btn-danger">Oui</button>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!--fin suprimer-->
               </div>
               <!-- /.box-tools -->
             </div>

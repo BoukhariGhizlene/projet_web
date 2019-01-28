@@ -65,8 +65,19 @@
             <span>Projets</span>
           </a>
         </li>
+          <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
+          </a>
+        </li>
         
           @if(Auth::user()->role->nom == 'admin' )
+          <li>
+          <a href="{{url('materiel')}}">
+            <i class="fa fa-suitcase"></i> 
+            <span>matériel</span></a>
+          </li>
 
           <li>
           <a href="{{url('parametre')}}">
@@ -157,6 +168,29 @@
                           </div>
                         </div>
                   </div>  
+
+                   <!-- contact-->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Partenaires (*)</label>
+                    <div class="col-md-9 inputGroupContainer @if($errors->get('Partenaire[]')) has-error @endif">
+                      <div style="width: 70%">
+                        <select name ="Partenaire[]"  class="form-control select2 " multiple="multiple" data-placeholder="Selectionnez les Membres" value="{{old('Partenaire[]')}}">
+                          @foreach($Partenaires as $Partenaire)
+                              <option value="{{$Partenaire->id}}">{{$Partenaire->nom}} </option>
+                           @endforeach
+                        </select>
+                        <span class="help-block">
+                                @if($errors->get('Partenaire[]'))
+                                  @foreach($errors->get('Partenaire[]') as $message)
+                                    <li> {{ $message }} </li>
+                                  @endforeach
+                                @endif
+                            </span>
+                      </div>
+                    </div>
+                  </div>
+                  <!--fin contact-->
+
 
                  <div class="form-group">
                       <label class="col-md-3 control-label">Axes de recherche</label>

@@ -113,6 +113,9 @@
           <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
           </li>
+           <li>
+            <a href="/"><i class="fa fa-chevron-right"></i></a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -130,6 +133,7 @@
         <div class="pull-left info">
           <p>{{Auth::user()->name}} <br>  <smal>{{Auth::user()->prenom}} </smal> </p>
         </div>
+
       </div>
 
       <!-- search form -->

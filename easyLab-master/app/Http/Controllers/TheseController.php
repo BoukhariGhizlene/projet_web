@@ -24,8 +24,16 @@ class TheseController extends Controller
     {
         $theses = These::all(); 
         $labo = Parametre::find('1');
-
-        return view('these.index' , ['theses' => $theses] , ['labo'=>$labo]);
+        $soutnounce= \DB::table('theses')->groupBy ('date_d')
+           ->select( \DB::raw('year(date_debut) as date_d , count(*) as total '))
+          ->orderBy('date_d')
+         ->get();
+         $theseencours= \DB::table('theses')->groupBy ('date_s')
+            ->select( \DB::raw('year(date_soutenance) as date_s, count(*) as total '))
+             ->whereNotNull('date_soutenance')
+             ->orderBy('date_s')
+             ->get();
+        return view('these.index' ) ->with (['theses' => $theses , 'labo'=> $labo ,'soutnounce'=> $soutnounce ,'theseencours'=> $theseencours] );
     }
 
     public function details($id)
@@ -119,7 +127,7 @@ class TheseController extends Controller
         $these->titre = $request->input('titre');
         $these->sujet = $request->input('sujet');
         $these->date_debut = $request->input('date_debut');
-        $these->date_soutenance = $request->input('date_soutenance');
+        $these->date_soutenance = date($request->input('date_soutenance'));
         $these->encadreur_ext = $request->input('encadreur_ext');
         $these->encadreur_int = $request->input('encadreur_int');
         $these->coencadreur_ext = $request->input('coencadreur_ext');

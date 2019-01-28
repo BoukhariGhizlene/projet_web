@@ -3,7 +3,48 @@
 @section('title','LRI | Liste des équipes')
 
 @section('header_page')
-	<h1>
+<style> table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+</style>
+  
+    <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "Effectif membre"
+      },
+      data: [
+      {
+       type: "doughnut", 
+       dataPoints: [
+           @foreach($g as $varss)
+  
+       {  y: {{$varss->total}}, indexLabel:"{{ $varss->achronymes }}"},
+           
+           
+           @endforeach
+       
+       ]
+     }
+     ]
+   });
+
+    chart.render();
+  }
+  </script>
+  <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <h1>
         Equipes
       </h1>
       <ol class="breadcrumb">
@@ -14,7 +55,7 @@
 
 @section('asidebar')
 
-		<li >
+    <li >
           <a href="{{url('dashboard')}}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
@@ -200,6 +241,28 @@
               @endforeach
             </div>
           </div>
+               <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Effectif membre</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+       <table>
+        <tr><th >équipe</th><th>Effectif membre</th></tr>
+        @foreach($g as $varss)
+        <tr><td>{{ $varss->achronymes }}</td><td>{{$varss->total}}</td></tr>
+         @endforeach
+        </table>
+    <br>
+    <br>
+    <br>
+    <div id="chartContainer" style="height: 300px; width: 100%;">
+    </div>
+
             <!-- /.box-body -->
         </div>
         

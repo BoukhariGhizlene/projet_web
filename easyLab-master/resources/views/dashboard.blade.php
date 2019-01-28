@@ -57,8 +57,12 @@
             <span>Projets</span>
           </a>
         </li>
-        
-      
+      <li >
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-folder-open-o"></i> 
+            <span>Partennaire</span>
+          </a>
+        </li>
           @if(Auth::user()->role->nom == 'admin' )
 
           <li>

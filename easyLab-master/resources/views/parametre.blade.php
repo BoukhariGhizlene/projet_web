@@ -105,6 +105,17 @@
                               <input name="logo" type="file" accept="image/*">
                              </div>
                      </div>
+
+               <div class="form-group " style="padding-top: 20px">
+                        <label class="col-xs-4 control-label">Presentation</label>  
+                        <div class="col-xs-8 inputGroupContainer">
+                          <div style="width: 50%">
+                            <textarea  name="presentation" class="form-control" placeholder="Le nom" rows="10" cols="80"  >
+                    </textarea>
+                          </div>
+                        </div>
+                  </div>  
+
                     
 
               </fieldset>

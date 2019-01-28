@@ -63,7 +63,12 @@
           </a>
         </li>
         
-       
+         <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
+          </a>
+        </li>
         
           @if(Auth::user()->role->nom == 'admin' )
 

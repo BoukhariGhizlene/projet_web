@@ -3,7 +3,104 @@
 @section('title','LRI | Liste des thèses')
 
 @section('header_page')
+  <style>   table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+</style>
+
+<?php
+   $i=0;$i2=0;$i3=0;$i4=0;$i1=0;
+    foreach($soutnounce as $va)
+    {
+        $i++;
+    }
+     foreach($theseencours as $va)
+    {
+        $i2++;
+    }
+    
+        while($i4<$i2 || $i3<$i)
+        {
+            if($i>$i3 && $soutnounce[$i3]->date_d!=null &&($i4==$i2|| $soutnounce[$i3]->date_d< $theseencours[$i4]->date_s ||$theseencours[$i4]->date_s==null)){
+         $date[$i1]=$soutnounce[$i3]->date_d;
+                $i1++;
+                $i3++;
+            }
+            if($i2>$i4 && $theseencours[$i4]->date_s!=null &&($i3==$i|| $soutnounce[$i3]->date_d > $theseencours[$i4]->date_s|| $theseencours[$i4]->date_s==null)){
+            $date[$i1]=$theseencours[$i4]->date_s ; 
+                $i1++;
+                $i4++;
+                }
+        }
+     
+    ?>
+<script type="text/javascript">
+  window.onload = function () {
+        
+      var chartpppp = new CanvasJS.Chart("chartContainer1",
+    {
+      title:{
+        text: "le thèses en cours /soutenues"
+      }, 
+       
+		data: [
+		
+
+
+ {
+              	type: "bar",
+			dataPoints: [<?php $m=0;?> 
+             @for($j=0;$j<$i1;$j++)  
+            @if($i>$m && $soutnounce[$m]->date_d==$date[$j])
+            {  y: {{$soutnounce[$m]->total}} , label:"le thèses en cours {{$soutnounce[$m]->date_d}}" },
+             <?php $m++; ?>
+            @else
+                 {  y: 0 , label:"{{$date[$j]}}" },
+                @endif
+            @endfor                             
+                                         
+            ]  
+		},{
+              	type: "bar",
+			dataPoints: [ 
+                <?php $m1=0;?>
+             @for($j=0;$j<$i1;$j++)  
+            @if( $i2>$m1 && $theseencours[$m1]->date_s==$date[$j])
+            {  y: {{$theseencours[$m1]->total}} , label:"soutenues {{$theseencours[$m1]->date_s}}" },
+               <?php $m1++; ?>
+            @else
+                 {  y: 0 , label:"{{$date[$j]}}" },
+                @endif
+            @endfor                             
+                                         
+            ]  
+		},{
+              	type: "bar",
+			dataPoints: [ 
+                <?php $m1=0;?>
+             @for($j=0;$j<$i1;$j++)  
+                 {  y: 0 , label:"{{$date[$j]}}" },
+            @endfor                             
+                                         
+            ]  
+		}
+		]
+	});
+     
+
+chartpppp.render();
+}
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
       <h1>
         Thèses
       </h1>
@@ -181,7 +278,38 @@
                   <th>Actions</th>
                 </tr>
                 </tfoot>
+        </div>
+</div>
               </table>
+<br><br><br><br>
+ <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">le thèses en cours /soutenues</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+     <br><br><br>
+     <table>
+         <tr><th>l'année des  thèses en cours </th><th>total</th></tr>
+          @foreach($soutnounce as $va)
+         <tr><td>{{$va->date_d}}</td><td>{{$va->total}}</td></tr>
+         @endforeach
+     </table>
+     <br><br><br>
+     <table>
+         <tr><th>l'année des soutenues </th><th>total</th></tr>
+         @foreach($theseencours as $va)
+         <tr><td>{{$va->date_s}}</td><td>{{$va->total}}</td></tr>
+         @endforeach
+     </table>
+     <br><br><br>
+    <div id="chartContainer1" style="height: 300px; width: 100%;">
+    </div>
+     
             </div>
             <!-- /.box-body -->
           </div>

@@ -1,9 +1,6 @@
-@extends('layouts.FrontOffice')
 
 @section('content')
 @extends('layouts.Menu')
-
-@section('content')
 <?php 
      try
 {// On se connecte à MySQL
@@ -22,33 +19,9 @@
      //while ($donnees = $reponse->fetch()) // On affiche chaque entrée une à une
 //{
 ?>
-<!DOCTYPE html>
 
-<html class="wide wow-animation scrollTo" lang="en">
-  <head>
-    
-    <!-- Site Title-->
     <title><?php echo $row['name']."  ".$row['prenom']  ?></title>
-    <meta charset="utf-8">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="keywords" content="intense web design multipurpose template">
-    <meta name="date" content="Dec 26">
-    <link rel="icon" href="images/1525711039.png" type="image/x-icon">
-    <!-- Stylesheets-->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300italic,300,400italic,600,700%7CMerriweather:400,300,300italic,400italic,700,700italic">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="font-awesome-4.7.0\css/font-awesome.min.css">
-    <link href="MaterialDesign-Webfont-master\css\materialdesignicons.min.css" rel="stylesheet">
-    <!--[if lt IE 10]>
-    <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
-    <script src="js/html5shiv.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <!-- Page-->
-    <div class="page text-center">
+   
      
       <!-- Classic Breadcrumbs-->
       <section class="breadcrumb-classic context-dark">
@@ -86,21 +59,21 @@
           <div class="shell">
             <div class="range range-xs-center">
               <div class="cell-sm-4 text-sm-left">
-                <div class="inset-sm-right-30"><img class="img-responsive reveal-inline-block" src="<?php echo (asset($row['photo'])); ?>" width="340" height="340" alt="">
+                <div class="inset-sm-right-30"><img class="img-responsive reveal-inline-block" src="<?php if($row['autorisation_public_photo']!=0) {echo (asset($row['photo']));}
+               else {echo(asset('labo/front_office/img/membre1.jpg'));} ?>" width="340" height="340" alt="">
                   <div class="offset-top-15 offset-sm-top-30"><a class="btn btn-primary btn-block" href="" style="max-width: 340px; margin-left:auto; margin-right:auto;">voir profil</a></div>
                   <div class="offset-top-15 offset-sm-top-30">
                     <ul class="list list-unstyled">
-                      <li><span class="icon icon-xs mdi mdi-phone text-middle text-madison"></span><a class="reveal-inline-block text-dark inset-left-10" href="tel:#"><?php echo $row['date_naissance'];  ?></a></li>
-                      <li><span class="icon icon-xs mdi mdi-phone text-middle text-madison"></span><a class="reveal-inline-block text-dark inset-left-10" href="tel:#"><?php echo $row['num_tel'];  ?></a></li>
-                      <li><span class="icon icon-xs mdi mdi-email-open text-middle text-madison"></span><a class="reveal-inline-block inset-left-10" href="mailto:info@demolink.org"><?php echo $row['email'];  ?></a></li>
+                      <?php if($row['autorisation_public_date_naiss']!=0) { ?><li><span class="icon icon-xs fa fa-calendar text-middle text-madison"></span><a class="reveal-inline-block text-dark inset-left-10" href="tel:#"><?php echo $row['date_naissance'];  ?></a></li><?php } ?>
+                      <?php if($row['autorisation_public_num_tel']!=0) { ?><li><span class="icon icon-xs fa fa-phone text-middle text-madison"></span><a class="reveal-inline-block text-dark inset-left-10" href="tel:#"><?php echo $row['num_tel'];  ?></a></li><?php } ?>
+                      <li><span class="icon icon-xs fa fa-envelope-open text-middle text-madison"></span><a class="reveal-inline-block inset-left-10" href="mailto:info@demolink.org"><?php echo $row['email'];  ?></a></li>
                     </ul>
                   </div>
                   <div class="offset-top-15 offset-sm-top-30">
                     <ul class="list-inline list-inline-xs list-inline-madison">
-                      <li><a class="icon icon-xxs fa-facebook icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
-                      <li><a class="icon icon-xxs fa-twitter icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
-                      <li><a class="icon icon-xxs fa-google icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
-                      <li><a class="icon icon-xxs fa-instagram icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
+                    <?php if($row['lien_linkedin']!=null) { ?>
+                      <li><a class="icon icon-xxs fa-linkedin icon-circle icon-gray-light-filled" href="<?php echo $row['lien_linkedin'];  ?>"></a></li><?php } ?>
+                      
                     </ul>
                   </div>
                 </div>
@@ -262,7 +235,7 @@
                   <div>
                     <h4 class="text-bold team-member-title"><a href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html"><?php echo $projets['intitule'];  ?></a></h4>
                   </div>
-                  <p class="offset-top-0"><?php echo $projets['type'];  ?></p><a class="btn btn-primary" href="Profile Membre.html">Detail</a>
+                  <p class="offset-top-0"><?php echo $projets['type'];  ?></p><a class="btn btn-primary" href="/projets/<?php echo $projets['projet_id'];  ?>/details"">Detail</a>
                 </div>
               </div>
             </div>
@@ -351,188 +324,8 @@
           </div>
         </section>
         <!-- Classic Skills Bars-->
-        <section class="section-70 section-md-114 bg-madison context-dark">
-          <div class="shell">
-            <h2 class="text-bold"> bars de progresion</h2>
-            <hr class="divider bg-madison">
-            <div class="range range-xs-center offset-top-65">
-              <div class="cell-xs-10 cell-sm-6">
-                <!-- Linear progress bar-->
-                <div class="progress-linear animated-first" data-to="70">
-                  <div class="progress-header clearfix">
-                    <div class="text-left">
-                      <h6 class="text-bold pull-left text-black">domaine 0</h6>
-                    </div><span class="text-bold pull-right progress-value">70</span>
-                  </div>
-                  <div class="progress-bar-linear-wrap offset-top-5">
-                    <div class="progress-bar-linear bg-primary" style="width: 70%;"></div>
-                  </div>
-                </div>
-                <div class="offset-top-56">
-                  <!-- Linear progress bar-->
-                  <div class="progress-linear" data-to="42">
-                    <div class="progress-header clearfix">
-                      <div class="text-left">
-                        <h6 class="text-bold pull-left text-black">domaine1</h6>
-                      </div><span class="text-bold pull-right progress-value">42</span>
-                    </div>
-                    <div class="progress-bar-linear-wrap offset-top-5">
-                      <div class="progress-bar-linear bg-primary"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="offset-top-56">
-                  <!-- Linear progress bar-->
-                  <div class="progress-linear" data-to="38">
-                    <div class="progress-header clearfix">
-                      <div class="text-left">
-                        <h6 class="text-bold pull-left text-black">domaine 2</h6>
-                      </div><span class="text-bold pull-right progress-value">38</span>
-                    </div>
-                    <div class="progress-bar-linear-wrap offset-top-5">
-                      <div class="progress-bar-linear bg-primary"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="offset-top-56">
-                  <!-- Linear progress bar-->
-                  <div class="progress-linear" data-to="94">
-                    <div class="progress-header clearfix">
-                      <div class="text-left">
-                        <h6 class="text-bold pull-left text-black">domaine 3</h6>
-                      </div><span class="text-bold pull-right progress-value">94</span>
-                    </div>
-                    <div class="progress-bar-linear-wrap offset-top-5">
-                      <div class="progress-bar-linear bg-primary"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="offset-top-20"></div>
-              </div>
-            </div>
-          </div>
-        </section>
+        
       </main>
       <!-- Page Footer-->
-      <!-- Corporate footer-->
-      <footer class="page-footer">
-        <div class="shell-wide">
-          <div class="hr bg-gray-light"></div>
-        </div>
-        <div class="shell section-60">
-          <div class="range range-lg-justify range-xs-center">
-            <div class="cell-md-3 cell-lg-2">
-               <!--Footer brand--><a class="reveal-inline-block" href="index.html"><img width='170' height='172' src="{{asset('labo/front_office/img/1525711039.png')}}" alt=''/>
-                <div>
-                  <h6 class="barnd-name text-bold offset-top-25">LRI</h6>
-                </div>
-                <div>
-                  <p class="brand-slogan text-gray text-italic font-accent">Tlemcen</p>
-                </div></a>
-            </div>
-            <div class="cell-xs-10 cell-md-5 cell-lg-4 text-lg-left offset-top-50 offset-md-top-0">
-              <h6 class="text-bold">Contact us</h6>
-              <div class="text-subline"></div>
-              <div class="offset-top-30">
-                <ul class="list-unstyled contact-info list">
-                  <li>
-                    <div class="unit unit-horizontal unit-middle unit-spacing-xs">
-                      <div class="unit-left"><span class="icon mdi mdi-phone text-middle icon-xs text-madison"></span></div>
-                      <div class="unit-body"><a class="text-dark" href="tel:#">1-800-1234-567,</a> <a class="reveal-block reveal-md-inline-block text-dark" href="tel:#">1-800-6547-321</a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="offset-top-15">
-                    <div class="unit unit-horizontal unit-middle unit-spacing-xs">
-                      <div class="unit-left"><span class="icon mdi mdi-map-marker text-middle icon-xs text-madison"></span></div>
-                      <div class="unit-body text-left"><a class="text-dark" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#">2130 Fulton Street San Diego, CA 94117-1080 USA</a></div>
-                    </div>
-                  </li>
-                  <li class="offset-top-15">
-                    <div class="unit unit-horizontal unit-middle unit-spacing-xs">
-                      <div class="unit-left"><span class="icon mdi mdi-email-open text-middle icon-xs text-madison"></span></div>
-                      <div class="unit-body"><a href="mailto:#">info@demolink.org</a></div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="offset-top-15 text-left">
-                <ul class="list-inline list-inline-xs list-inline-madison">
-                  <li><a class="icon icon-xxs fa-facebook icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
-                  <li><a class="icon icon-xxs fa-twitter icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
-                  <li><a class="icon icon-xxs fa-google icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
-                  <li><a class="icon icon-xxs fa-instagram icon-circle icon-gray-light-filled" href="https://livedemo00.template-help.com/wt_prod-14585/team-member-profile.html#"></a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="cell-xs-10 cell-md-8 cell-lg-4 text-lg-left offset-top-50 offset-lg-top-0">
-              <h6 class="text-bold">Newsletter</h6>
-              <div class="text-subline"></div>
-              <div class="offset-top-30 text-left">
-                <p>Enter your email address to get the latest University news, special events and student activities delivered right to your inbox.</p>
-              </div>
-              <div class="offset-top-10">
-                      <form class="rd-mailform form-subscribe" data-form-output="form-subscribe-footer" data-form-type="subscribe" method="post" action="https://livedemo00.template-help.com/wt_prod-14585/bat/rd-mailform.php" novalidate="novalidate">
-                        <div class="form-group">
-                          <div class="input-group input-group-sm">
-                            <input class="form-control form-control-has-validation" placeholder="Your e-mail" type="email" name="email" data-constraints="@Required @Email" id="regula-generated-343205"><span class="form-validation"></span><span class="input-group-btn">
-                              <button class="btn btn-sm btn-primary" type="submit">Subscribe</button></span>
-                          </div>
-                        </div>
-                        <div class="form-output" id="form-subscribe-footer"></div>
-                      </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bg-madison context-dark">
-          <div class="shell text-md-left section-5">
-            <p>© <span id="copyright-year">2018</span> All Rights Reserved Terms of Use and <a href="https://livedemo00.template-help.com/wt_prod-14585/privacy.html">Privacy Policy</a></p>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <!-- Global Mailform Output-->
-    <div class="snackbars" id="form-output-global"></div>
-    <!-- PhotoSwipe Gallery-->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="pswp__bg"></div>
-      <div class="pswp__scroll-wrap">
-        <div class="pswp__container">
-          <div class="pswp__item"></div>
-          <div class="pswp__item"></div>
-          <div class="pswp__item"></div>
-        </div>
-        <div class="pswp__ui pswp__ui--hidden">
-          <div class="pswp__top-bar">
-            <div class="pswp__counter"></div>
-            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-            <button class="pswp__button pswp__button--share" title="Share"></button>
-            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-            <div class="pswp__preloader">
-              <div class="pswp__preloader__icn">
-                <div class="pswp__preloader__cut">
-                  <div class="pswp__preloader__donut"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-            <div class="pswp__share-tooltip"></div>
-          </div>
-          <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-          <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-          <div class="pswp__caption">
-            <div class="pswp__caption__center"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Java script-->
-    <script src="js/core.min.js"></script>
-    <script src="js/script.js"></script>
-  </body><!-- Google Tag Manager --><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-P9FT69"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P9FT69');</script><!-- End Google Tag Manager -->
-</html>
-@endsection
+      
 @endsection

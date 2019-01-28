@@ -5,12 +5,13 @@
 @section('header_page')
 
 	  <h1>
-        Profil
+        Materiel
        
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('dashboard')}}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-        <li class="active">Profil</li>
+        <li><a href="{{url('materiel')}}">materiel</a></li>
+        <li class="active">materiel</li>
       </ol>
 
 @endsection
@@ -63,9 +64,19 @@
           </a>
         </li>
         
-       
+         <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
+          </a>
+        </li>
         
           @if(Auth::user()->role->nom == 'admin' )
+            <li>
+          <a href="{{url('materiel')}}">
+            <i class="fa fa-suitcase"></i> 
+            <span>matériel</span></a>
+          </li>
 
           <li>
           <a href="{{url('parametre')}}">
@@ -105,7 +116,7 @@
                 <div class="btn-group">
             
 
- <a href="#AffecterU{{ $materiels->id }}Modal" role="button" class="btn btn-danger {{ ($Affectation_id != 0) ? 'disabled' : '' }}" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+ <a href="#AffecterU{{ $materiels->id }}Modal" role="button" class="btn  btn-primary {{ ($Affectation_id != 0) ? 'disabled' : '' }}" data-toggle="modal"><i class="fa  fa-user"></i></a>
                       <div class="modal fade" id="AffecterU{{ $materiels->id }}Modal" tabindex="-1" role="dialog" aria-labelledby="AffecterU{{ $materiels->id }}ModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                               <div class="modal-content">
@@ -162,7 +173,7 @@ $materiels->save();?>
                      </div>
 
               
-                            <a href="#AffecterE{{ $materiels->id }}Modal" role="button" class="btn btn-danger {{ ($Affectation_id != 0) ? 'disabled' : '' }}" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+                            <a href="#AffecterE{{ $materiels->id }}Modal" role="button" class="btn  btn-primary {{ ($Affectation_id != 0) ? 'disabled' : '' }}" data-toggle="modal"><i class="fa  fa-group "></i></a>
                       <div class="modal fade" id="AffecterE{{ $materiels->id }}Modal" tabindex="-1" role="dialog" aria-labelledby="AffecterE{{ $materiels->id }}ModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                               <div class="modal-content">
@@ -219,7 +230,7 @@ $materiels->save(); ?>
                      </div>
 
 
- <a href="#Rendu{{ $materiels->id }}Modal" role="button" class="btn btn-danger {{ ($Affectation_id == 0) ? 'disabled' : '' }}" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+ <a href="#Rendu{{ $materiels->id }}Modal" role="button" class="btn btn-success {{ ($Affectation_id == 0) ? 'disabled' : '' }}" data-toggle="modal"><i class="fa  fa-exchange"></i></a>
                       <div class="modal fade" id="Rendu{{ $materiels->id }}Modal" tabindex="-1" role="dialog" aria-labelledby="Rendu{{ $materiels->id }}ModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                               <div class="modal-content">
@@ -378,12 +389,7 @@ $materiels->save(); ?>
                 </tr>
                 </tfoot>
               </table>
-              <div class="pull-right">
-                <a href="{{url('articles/create')}}" type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"> Affecter</i></a>
-              </div>
-              <div class="pull-right">
-                <a href="{{url('articles/create')}}" type="button" class="btn btn-block btn-success btn-lg"><i class="fa fa-plus"> Render</i></a>
-              </div>
+             
             </div>
               </div>
 

@@ -40,7 +40,7 @@
               </div>
               <div class="rd-navbar-menu-wrap clearfix">
                 <!--Navbar Brand-->
-                <div class="rd-navbar-brand"><a class="reveal-inline-block" href="Home.html">
+                <div class="rd-navbar-brand"><a class="reveal-inline-block" href="/">
                     <div class="unit unit-xs-middle unit-lg unit-lg-horizontal unit-spacing-xxs">
                       <div class="unit-left">
                         <div class="wrap"><img width="170" height="172" src="{{asset('labo/front_office/img/1525711039.png')}}" alt="">
@@ -55,10 +55,11 @@
                   <div class="rd-navbar-mobile-scroll">
                     <div class="rd-navbar-mobile-header-wrap">
                       <!--Navbar Brand Mobile-->
-                      <div class="rd-navbar-mobile-brand"><a href="Home.html"><img width="136" height="138" src="{{asset('labo/front_office/img/1525711039.png')}}" alt=""></a></div>
+                      <div class="rd-navbar-mobile-brand"><a href="/"><img width="136" height="138" src="{{asset('labo/front_office/img/1525711039.png')}}" alt=""></a></div>
                     </div>
                 <!-- RD Navbar Nav-->
                     <ul class="rd-navbar-nav">
+
                      <li ><a href="/">Accueil</a>
                       </li>
                         <li ><a href="/actualité">Actualité</a>
@@ -95,6 +96,11 @@ $reponse->closeCursor(); // Termine le traitement de la requête
                       </li>
                       <li><a href="/Acceuil/contact">Contacts</a>
                       </li>
+                      </li>
+                      </li>
+<li><a href="dashboard" ><span class=" fa-user-circle-o fa-2"></span></a>
+                      </li>
+                      <li><a class="rd-navbar-search-toggle" data-rd-navbar-toggle=".rd-navbar-search" href="#"><span class="icon fa-shopping-cart"></span></a>
                       
                     </ul>
                     <!--RD Navbar Mobile Search-->
@@ -110,7 +116,7 @@ $reponse->closeCursor(); // Termine le traitement de la requête
                   </div>
                 </div>
                 <!--RD Navbar Search-->
-                <div class="rd-navbar-search"><a class="rd-navbar-search-toggle" data-rd-navbar-toggle=".rd-navbar-search" href="#"><span class="icon fa-shopping-cart"></span></a>
+                <div class="rd-navbar-search">
                   <form class="rd-navbar-search-form search-form-icon-right rd-search" action="search-results.html" data-search-live="rd-search-results-live" method="GET">
                     <div class="form-group">
                       <label class="form-label" for="rd-navbar-search-form-input">Search</label>
@@ -140,13 +146,13 @@ $reponse->closeCursor(); // Termine le traitement de la requête
                     <div class="range range-xs-center range-condensed">
                       <div class="cell-md-7 text-center cell-xs-10">
                         <div data-caption-animate="fadeInUp" data-caption-delay="100" data-caption-duration="1700" class="fadeInUp animated">
-                          <h1 class="text-bold">Laboratoire de la Recherche en informatique</h1>
+                          <h1 class="text-bold">{{$labo->nom}}</h1>
                         </div>
                         <div class="offset-top-20 offset-xs-top-40 offset-xl-top-60 fadeInUp animated" data-caption-animate="fadeInUp" data-caption-delay="150" data-caption-duration="1700">
-                          <h5 class="text-regular font-default">Any prominent career starts with good education. Together with us, you will have an opportunity of getting better and deeper knowledge of the subjects that can build your future</h5>
+                          <h5 class="text-regular font-default">{{$labo->resume}}</h5>
                         </div>
                         <div class="offset-top-20 offset-xl-top-40 fadeInUp animated" data-caption-animate="fadeInUp" data-caption-delay="400" data-caption-duration="1700">
-                          <div class="inset-xs-left-30 reveal-lg-inline-block"><a class="btn btn-primary btn-ellipse veil reveal-lg-inline-block" href="https://livedemo00.template-help.com/wt_prod-14585/academics.html">Lire plus</a></div>
+                          <div class="inset-xs-left-30 reveal-lg-inline-block"><a class="btn btn-primary btn-ellipse veil reveal-lg-inline-block" href="/Acceuil/Presentation">Lire plus</a></div>
                         </div>
                       </div>
                     </div>
@@ -178,13 +184,13 @@ $reponse->closeCursor(); // Termine le traitement de la requête
                     <div class="range range-xs-center range-lg-right range-condensed">
                       <div class="cell-md-6 text-md-left cell-xs-10">
                         <div data-caption-animate="fadeInUp" data-caption-delay="100" data-caption-duration="1700" class="not-animated">
-                          <h1 class="text-bold">Les equipes</h1>
+                          <h1 class="text-bold">Contactez nous!</h1>
                         </div>
                         <div class="offset-top-20 offset-xs-top-40 offset-xl-top-60 not-animated" data-caption-animate="fadeInUp" data-caption-delay="150" data-caption-duration="1700">
                           <h5 class="text-regular font-default">Take part in numerous amazing activities that will develop you as a person and help you make new friends that will undoubtedly become a part of your student life.</h5>
                         </div>
                         <div class="offset-top-20 offset-xl-top-40 not-animated" data-caption-animate="fadeInUp" data-caption-delay="400" data-caption-duration="1700">
-                          <div class="inset-xs-left-30 reveal-lg-inline-block"><a class="btn btn-ellipse btn-primary veil reveal-lg-inline-block" href="/Acceuil/Presentation">Lire plus</a></div>
+                          <div class="inset-xs-left-30 reveal-lg-inline-block"><a class="btn btn-ellipse btn-primary veil reveal-lg-inline-block" href="/Acceuil/contact">Contact</a></div>
                         </div>
                       </div>
                     </div>
@@ -202,62 +208,52 @@ $reponse->closeCursor(); // Termine le traitement de la requête
             <div class="range text-sm-left range-sm-justify">
               <div class="cell-sm-7 view-animate fadeInRightSm delay-04">
                 <div class="img-wrap-2">
-                  <figure><span class="icon mdi mdi-play-circle-outline" data-toggle="modal" data-target="#myModal"></span><img class="img-responsive reveal-inline-block" src="{{asset('labo/front_office/img/apropos.jpg')}}" width="620" height="350" alt=""></figure>
+                  <figure><span class="icon mdi fa-play" data-toggle="modal" data-target="#myModal"></span><img class="img-responsive reveal-inline-block" src="{{asset('labo/front_office/img/apropos.jpg')}}" width="620" height="350" alt=""></figure>
                 </div>
               </div>
               <div class="cell-sm-5 offset-top-50 offset-sm-top-0">
                 <h2 class="home-headings-custom text-bold view-animate fadeInLeftSm delay-06"><span class="first-word">Apropo de </span>notre laboratoire</h2>
                 <div class="offset-top-35 offset-md-top-60 view-animate fadeInLeftSm delay-08">
-                  <p>As one of the world's premier academic and research institutions, the Modern University has driven new ways of thinking since our founding. Today, we represent an intellectual destination that draws inspired scholars to our local and international campuses, keeping us at the nexus of ideas that challenge and change the world and provide companies with new specialists.</p>
+                  <p>{{$labo->resume}}</p>
                 </div>
-                <div class="offset-top-30 view-animate fadeInLeftSm delay-1"><a class="btn btn-ellipse btn-icon btn-icon-right btn-default" href="https://livedemo00.template-help.com/wt_prod-14585/history.html"><span class="icon fa-arrow-right"></span><span>Learn More</span></a></div>
+                <div class="offset-top-30 view-animate fadeInLeftSm delay-1"><a class="btn btn-ellipse btn-icon btn-icon-right btn-default" href="/Acceuil/Presentation"><span class="icon fa-arrow-right"></span><span>Lire plus</span></a></div>
               </div>
             </div>
           </div>
         </section>
       
-          <!-- Latest news-->
-        <section class="bg-madison section-70 section-md-114 text-center" style="background: url(&quot;labo/front_office/images/bg-pattern.jpg&quot;) center; background-size: cover;">
-          <div class="shell">
-            <h2 class="text-bold text-white view-animate fadeInUpSmall delay-04">Les Nouveux Articles</h2>
+      
+        
+        <!-- Testimonials-->
+        <section class="context-dark parallax-container position-relative" data-parallax-img="{{asset('labo/front_office/images/parallax-03.jpg')}}">
+          <div class="parallax-content">
+            <div class="shell section-70 section-xl-114">
+            
+                <h2 class="text-bold text-white view-animate fadeInUpSmall delay-04"> Actualités Récente</h2>
             <div class="range offset-top-60 text-left range-xs-center">
+              <?php $nbr=0; ?>
+             @foreach($actualite as $A)
+             <?php if($nbr<3){ ?>
               <div class="cell-sm-6 cell-md-4">
-                <article class="post-news post-news-mod-1 view-animate fadeInLeftSm delay-04"><a href=""><img class="img-responsive img-fullwidth" src="{{asset('labo/front_office/Home_files/news-01-370x240.jpg')}}" width="370" height="240" alt=""></a>
+                <article class="post-news post-news-mod-1 view-animate fadeInLeftSm delay-04"><a href=""><img class="img-responsive img-fullwidth" src="{{asset($A->photo)}}" width="370" height="240" alt=""></a>
                   <div class="post-news-body">
-                    <h6><a href="">Liberal Arts Colleges Rankings</a></h6>
+                    <h6><a href="">{{$A->titre}}</a></h6>
                     <div class="offset-top-20">
-                      <p>Liberal Arts Colleges emphasize undergraduate education. These institutions award at least half of their degrees in the arts and sciences, which is a great…</p>
+                      <p>{{$A->resumer}}…</p>
                     </div>
-                    <div class="post-news-meta offset-top-20"><span class="icon icon-xs mdi mdi-calendar-clock text-middle text-madison"></span><span class="text-middle inset-left-10 text-italic text-black">2 days ago</span></div>
+                    <div class="post-news-meta offset-top-20"><p><span class="icon icon-xs mdi fa-calendar text-middle text-madison"></span><span class="text-middle inset-left-10 text-italic ">{{$A->created_at}}</p></span></div>
                   </div>
                 </article>
-              </div>
-              <div class="cell-sm-6 cell-md-4 offset-top-30 offset-sm-top-0">
-                <article class="post-news post-news-mod-1 view-animate fadeInLeftSm delay-06"><a href=""><img class="img-responsive img-fullwidth" src="{{asset('labo/front_office/Home_files/news-04-370x240.jpg')}}" width="370" height="240" alt=""></a>
-                  <div class="post-news-body">
-                    <h6><a href="">Studying in the United States</a></h6>
-                    <div class="offset-top-20">
-                      <p>International students increasingly want to come to the United States for college or graduate school. According to the US Educational System…</p>
-                    </div>
-                    <div class="post-news-meta offset-top-20"><span class="icon icon-xs mdi mdi-calendar-clock text-middle text-madison"></span><span class="text-middle inset-left-10 text-italic text-black">2 days ago</span></div>
-                  </div>
-                </article>
-              </div>
-              <div class="cell-sm-6 cell-md-4 offset-top-30 offset-md-top-0">
-                <article class="post-news post-news-mod-1 view-animate fadeInLeftSm delay-08"><a href=""><img class="img-responsive img-fullwidth" src="{{asset('labo/front_office/Home_files/news-02-370x240.jpg')}}" width="370" height="240" alt=""></a>
-                  <div class="post-news-body">
-                    <h6><a href="">Paying for Community College</a></h6>
-                    <div class="offset-top-20">
-                      <p>Many community colleges offer promise programs, which offer tuition-free awards to eligible students – mainly to students with Pell grant eligibility...</p>
-                    </div>
-                    <div class="post-news-meta offset-top-20"><span class="icon icon-xs mdi mdi-calendar-clock text-middle text-madison"></span><span class="text-middle inset-left-10 text-italic text-black">2 days ago</span></div>
-                  </div>
-                </article>
-              </div>
+              </div> <?php $nbr++; } ?>@endforeach
+              
             </div>
-            <div class="offset-top-50 view-animate fadeInUpSmall"><a class="btn btn-ellipse btn-primary" href="https://livedemo00.template-help.com/wt_prod-14585/modern-news.html">View All News Posts</a></div>
+            <div class="offset-top-50 view-animate fadeInUpSmall"><a class="btn btn-ellipse btn-primary" href="/actualité">voir plus</a></div>
+                 
+          
+            </div>
           </div>
         </section>
+        
          <!-- Google map-->
         <section>
           <!-- RD Google Map-->
@@ -271,55 +267,6 @@ $reponse->closeCursor(); // Termine le traitement de la requête
           </div>
         </section>
        
-        <!-- Testimonials-->
-        <section class="context-dark parallax-container position-relative" data-parallax-img="{{asset('labo/front_office/images/parallax-03.jpg')}}">
-          <div class="parallax-content">
-            <div class="shell section-70 section-xl-114">
-            
-                <h2 class="text-bold text-white view-animate fadeInUpSmall delay-04">Les Nouvel Theses</h2>
-            <div class="range offset-top-60 text-left range-xs-center">
-              <div class="cell-sm-6 cell-md-4">
-                <article class="post-news post-news-mod-1 view-animate fadeInLeftSm delay-04"><a href=""><img class="img-responsive img-fullwidth" src="{{asset('labo/front_office/Home_files/news-01-370x240.jpg')}}" width="370" height="240" alt=""></a>
-                  <div class="post-news-body">
-                    <h6><a href="">Liberal Arts Colleges Rankings</a></h6>
-                    <div class="offset-top-20">
-                      <p>Liberal Arts Colleges emphasize undergraduate education. These institutions award at least half of their degrees in the arts and sciences, which is a great…</p>
-                    </div>
-                    <div class="post-news-meta offset-top-20"><span class="icon icon-xs mdi mdi-calendar-clock text-middle text-madison"></span><span class="text-middle inset-left-10 text-italic text-black">2 days ago</span></div>
-                  </div>
-                </article>
-              </div>
-              <div class="cell-sm-6 cell-md-4 offset-top-30 offset-sm-top-0">
-                <article class="post-news post-news-mod-1 view-animate fadeInLeftSm delay-06"><a href=""><img class="img-responsive img-fullwidth" src="{{asset('labo/front_office/Home_files/news-04-370x240.jpg')}}" width="370" height="240" alt=""></a>
-                  <div class="post-news-body">
-                    <h6><a href="">Studying in the United States</a></h6>
-                    <div class="offset-top-20">
-                      <p>International students increasingly want to come to the United States for college or graduate school. According to the US Educational System…</p>
-                    </div>
-                    <div class="post-news-meta offset-top-20"><span class="icon icon-xs mdi mdi-calendar-clock text-middle text-madison"></span><span class="text-middle inset-left-10 text-italic text-black">2 days ago</span></div>
-                  </div>
-                </article>
-              </div>
-              <div class="cell-sm-6 cell-md-4 offset-top-30 offset-md-top-0">
-                <article class="post-news post-news-mod-1 view-animate fadeInLeftSm delay-08"><a href=""><img class="img-responsive img-fullwidth" src="{{asset('labo/front_office/Home_files/news-02-370x240.jpg')}}" width="370" height="240" alt=""></a>
-                  <div class="post-news-body">
-                    <h6><a href="">Paying for Community College</a></h6>
-                    <div class="offset-top-20">
-                      <p>Many community colleges offer promise programs, which offer tuition-free awards to eligible students – mainly to students with Pell grant eligibility...</p>
-                    </div>
-                    <div class="post-news-meta offset-top-20"><span class="icon icon-xs mdi mdi-calendar-clock text-middle text-madison"></span><span class="text-middle inset-left-10 text-italic text-black">2 days ago</span></div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="offset-top-50 view-animate fadeInUpSmall"><a class="btn btn-ellipse btn-primary" href="https://livedemo00.template-help.com/wt_prod-14585/modern-news.html">View All News Posts</a></div>
-                 
-          
-            </div>
-          </div>
-        </section>
-        
-        
         
       </main>
       <!-- Modal-->
@@ -332,7 +279,7 @@ $reponse->closeCursor(); // Termine le traitement de la requête
             </div>
             <div class="modal-body">
               <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="./Home_files/-AhmuMqZB0s.html"></iframe>
+                <iframe class="embed-responsive-item" src="{{asset('labo/front_office/img/v.mp4')}}"></iframe>
               </div>
             </div>
           </div>
@@ -343,7 +290,7 @@ $reponse->closeCursor(); // Termine le traitement de la requête
         <div class="shell section-60 section-bottom-20">
           <div class="range range-xs-center">
             <div class="cell-md-3 cell-lg-2">
-              <!--Footer brand--><a class="reveal-inline-block view-animate zoomInSmall delay-06" href="https://livedemo00.template-help.com/wt_prod-14585/index.html"><img width="65" height="65" src="{{asset('labo/front_office/img/1525711039.png')}}" alt="">
+              <!--Footer brand--><a class="reveal-inline-block view-animate zoomInSmall delay-06" href="/"><img width="65" height="65" src="{{asset('labo/front_office/img/1525711039.png')}}" alt="">
                 <div>
                   <h6 class="barnd-name text-bold offset-top-12">LRI</h6>
                 </div>
@@ -353,10 +300,10 @@ $reponse->closeCursor(); // Termine le traitement de la requête
             </div>
             <div class="cell-xs-12 offset-top-15 offset-sm-top-40 text-center">
               <ul class="list-inline list-inline-xs list-inline-madison">
-                <li><a class="icon icon-xxs fa-facebook icon-circle icon-gray-light-filled view-animate zoomInSmall delay-04" href="https://livedemo00.template-help.com/wt_prod-14585/index.html#"></a></li>
-                <li><a class="icon icon-xxs fa-twitter icon-circle icon-gray-light-filled view-animate zoomInSmall delay-06" href="https://livedemo00.template-help.com/wt_prod-14585/index.html#"></a></li>
-                <li><a class="icon icon-xxs fa-google icon-circle icon-gray-light-filled view-animate zoomInSmall delay-08" href="https://livedemo00.template-help.com/wt_prod-14585/index.html#"></a></li>
-                <li><a class="icon icon-xxs fa-instagram icon-circle icon-gray-light-filled view-animate zoomInSmall delay-1" href="https://livedemo00.template-help.com/wt_prod-14585/index.html#"></a></li>
+                <li><a class="icon icon-xxs fa-facebook icon-circle icon-gray-light-filled view-animate zoomInSmall delay-04" href="/"></a></li>
+                <li><a class="icon icon-xxs fa-twitter icon-circle icon-gray-light-filled view-animate zoomInSmall delay-06" href="/"></a></li>
+                <li><a class="icon icon-xxs fa-google icon-circle icon-gray-light-filled view-animate zoomInSmall delay-08" href="/"></a></li>
+                <li><a class="icon icon-xxs fa-instagram icon-circle icon-gray-light-filled view-animate zoomInSmall delay-1" href="/"></a></li>
               </ul>
             </div>
             <div class="cell-xs-12 text-center offset-top-20 offset-sm-top-45">

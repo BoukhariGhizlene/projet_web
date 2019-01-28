@@ -55,8 +55,8 @@ class MaterielController extends Controller
         $membre = User::all();
         $equipes = Equipe::all();
         $materiels = Materiels::find($id);
-        $materielsEquipe = MaterielEquipes::all();
-        $materielsUser = MaterielUsers::all();
+        $materielsEquipe = MaterielEquipes::orderBy('created_at', 'desc')->get();
+        $materielsUser = MaterielUsers::orderBy('created_at', 'desc')->get();
         $labo = Parametre::find('1');
         $categories = CategorieMaterial::All();
 
@@ -112,7 +112,7 @@ class MaterielController extends Controller
 
         }
         else{
-            $file_name="userDefault.png";
+            $file_name="m.jpg";
         }
      $materiel->nom = $request->input('nom');
      $materiel->description = $request->input('description');
@@ -122,6 +122,23 @@ class MaterielController extends Controller
 
         return redirect('materiel');
  
+    }
+
+     //récuperer un article puis le mettre dans le formulaire
+     public function edit($id){
+
+        $Materiel = Materiels::find($id);
+         $membres = User::all();
+         $labo =  Parametre::find('1');
+
+         $this->authorize('update', $Materiel);
+
+        return view('materiel.edit')->with([
+            'materiel' => $Materiel,
+            'membres' => $membres,
+            'labo'=>$labo,
+        ]);;
+        
     }
 
      public function storeAffectationEquipe(Request $request,$Mid)

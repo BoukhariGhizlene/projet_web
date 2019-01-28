@@ -4,6 +4,170 @@
 
 @section('header_page')
 
+
+
+<style>table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+</style>
+    
+       <?php
+   $i=0;$i2=0;$i3=0;$i4=0;$i1=0;
+    foreach($soutnounce as $va)
+    {
+        $i++;
+    }
+     foreach($theseencours as $va)
+    {
+        $i2++;
+    }
+    
+        while($i4<$i2 || $i3<$i)
+        {
+            if($i>$i3 && $soutnounce[$i3]->date_d!=null &&($i4==$i2|| $soutnounce[$i3]->date_d< $theseencours[$i4]->date_s ||$theseencours[$i4]->date_s==null)){
+         $date[$i1]=$soutnounce[$i3]->date_d;
+                $i1++;
+                $i3++;
+            }
+            if($i2>$i4 && $theseencours[$i4]->date_s!=null &&($i3==$i|| $soutnounce[$i3]->date_d > $theseencours[$i4]->date_s|| $theseencours[$i4]->date_s==null)){
+            $date[$i1]=$theseencours[$i4]->date_s ; 
+                $i1++;
+                $i4++;
+                }
+        }
+     
+    ?>
+    
+    
+    
+   <script type="text/javascript">
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer",
+	{
+		title:{
+			text: "numbre d'article publié"
+		},
+		legend: {
+			maxWidth: 350,
+			itemWidth: 120
+		},
+		data: [
+		{
+			type: "pie",
+			showInLegend: true,
+			legendText: "{indexLabel}",
+			dataPoints: [
+                @foreach($var as $varss)
+				{ y: {{$varss->total}}, indexLabel: "{{$varss->type}}" },
+                @endforeach
+                
+			]
+		}
+		]
+	});
+	chart.render();
+      	var chart1 = new CanvasJS.Chart("chartContainer1",
+	{
+		title:{
+			text: "Nombre des articles publies par l'année"
+		},
+		axisY:{
+			title:"Coal (bn tonnes)",
+			valueFormatString: "#0.#,.",
+		},
+		data: [
+		 @foreach($var2 as $va)
+            {
+		
+                
+              	type: "stackedColumn",
+			legendText: "Anthracite & Bituminous",
+			showInLegend: "true",
+			dataPoints: [ 
+             @foreach($vars as $varss)
+            @if($varss->annee==$va->annee)
+             {  y: {{$va->total}} , label:"{{$va->type}}" },
+            @else
+            {  y:0 , label:" " },
+            @endif
+            @endforeach
+            ]  
+		},@endforeach
+                                   
+            {
+		
+                
+              	type: "stackedColumn",
+			legendText: "Anthracite & Bituminous",
+			showInLegend: "true",
+			dataPoints: [ 
+             @foreach($vars as $varss)
+             {  y:0, label:"{{$varss->annee}}" },
+           
+            @endforeach
+            ]  
+		}
+		]
+	});
+	chart1.render();
+         
+      
+      var chartpppp = new CanvasJS.Chart("chartContainer3",
+    {
+      title:{
+        text: "le these encours /soutneunce"
+      }, 
+       
+		data: [
+		
+
+
+ {
+              	type: "bar",
+			dataPoints: [<?php $m=0;?> 
+             @for($j=0;$j<$i1;$j++)  
+            @if($i>$m && $soutnounce[$m]->date_d==$date[$j])
+            {  y: {{$soutnounce[$m]->total}} , label:"{{$soutnounce[$m]->date_d}}" },
+             <?php $m++; ?>
+            @else
+                 {  y: 0 , label:"{{$date[$j]}}" },
+                @endif
+            @endfor                             
+                                         
+            ]  
+		},{
+              	type: "bar",
+			dataPoints: [ 
+                <?php $m1=0;?>
+             @for($j=0;$j<$i1;$j++)  
+            @if( $i2>$m1 && $theseencours[$m1]->date_s==$date[$j])
+            {  y: {{$theseencours[$m1]->total}} , label:"{{$theseencours[$m1]->date_s}}" },
+               <?php $m1++; ?>
+            @else
+                 {  y: 0 , label:"{{$date[$j]}}" },
+                @endif
+            @endfor                             
+                                         
+            ]  
+		}
+		]
+	});
+     
+
+chartpppp.render();
+}
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
        <h1>
         Equipes
         <small>Détails</small>
@@ -64,8 +228,18 @@
             <span>Projets</span>
           </a>
         </li>
-        
+          <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
+          </a>
+        </li>
           @if(Auth::user()->role->nom == 'admin' )
+          <li>
+          <a href="{{url('materiel')}}">
+            <i class="fa fa-suitcase"></i> 
+            <span>matériel</span></a>
+          </li>
 
           <li>
           <a href="{{url('parametre')}}">
@@ -139,6 +313,13 @@
               </div>
             </li>
 
+
+
+
+
+
+
+
             <li>
               <i class="fa fa-search bg-purple"></i>
 
@@ -206,6 +387,29 @@
                       </div>
                   </div>
 
+
+                   <div class="form-group ">
+                        <label class="col-xs-3 control-label">Partenaires</label>  
+                        <div class="col-xs-9 inputGroupContainer">
+                          <div  style="width: 70%">
+
+                            <select name="Partenaire[]" class="form-control select2" multiple="multiple" data-placeholder="Selectionnez les Membres" value="{{old('Partenaire[]')}}">
+                               @foreach($Partenaires as $Partenaire)
+                              <option value="{{$Partenaire->id}}">{{$Partenaire->nom}} </option>
+                           @endforeach
+                            </select>
+                             <span class="help-block">
+                                @if($errors->get('Partenaire[]'))
+                                  @foreach($errors->get('Partenaire[]') as $message)
+                                    <li> {{ $message }} </li>
+                                  @endforeach
+                                @endif
+                            </span>
+                          </div>
+                        </div>
+                  </div>
+
+
                   <div class="form-group">
                       <label class="col-md-3 control-label">Axes de recherche</label>
                       <div class="col-md-9 inputGroupContainer">
@@ -257,4 +461,94 @@
     
 
     </div>
+<div class="box-header with-border">
+      <h3 class="box-title">statistique</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+     
+
+<div class="content">
+    <br><br><br>
+      <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">numbre d'article publié</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <table>
+        <th>type</th><th>le nombre d'article </th>
+         @foreach($var as $varss)
+<tr><td>{{$varss->type}}</td><td>{{$varss->total}}</td></tr>
+                @endforeach
+          
+    </table>
+ <br><br><br>
+    <div id="chartContainer" style="height: 300px; width: 100%;">
+    </div>
+    </div>
+<br><br><br>
+      <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">Nombre des articles publies par l'année</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+       <table>
+        <th>l'année</th><th>l'annee</th><th>le nombre d'article </th>
+         @foreach($var2 as $varss)
+<tr><td>{{$varss->type}}</td><td>{{$varss->annee}}</td><td>{{$varss->total}}</td></tr>
+                @endforeach
+          
+       
+    </table>
+   <br><br><br>
+    
+    <div id="chartContainer1" style="height: 300px; width: 100%;">
+    </div>
+    </div>
+    <br><br><br>
+      <div class="box box-success">
+    <div class="box-header with-border">
+      <h3 class="box-title">le these encours /soutneunce</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <table> 
+                 <tr><th>l'année des  thèses en cours </th><th>total</th></tr>
+          @foreach($soutnounce as $va)
+         <tr><td>{{$va->date_d}}</td><td>{{$va->total}}</td></tr>
+         @endforeach
+     </table>
+     <br><br><br>
+     <table>
+         <tr><th>l'année des soutenues </th><th>total</th></tr>
+         @foreach($theseencours as $va)
+         <tr><td>{{$va->date_s}}</td><td>{{$va->total}}</td></tr>
+         @endforeach
+        </table>
+         <br><br><br>   
+   
+    
+    <div id="chartContainer3" style="height: 300px; width: 100%;">
+    </div>
+</div>
+     
+          </div>
 @endsection

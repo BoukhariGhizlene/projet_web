@@ -61,8 +61,19 @@
             <span>Projets</span>
           </a>
         </li>
+          <li>
+          <a href="{{url('partennaires')}}">
+            <i class="fa fa-address-book"></i> 
+            <span>Partennaires</span>
+          </a>
+        </li>
 
         @if(Auth::user()->role->nom == 'admin' )
+        <li>
+          <a href="{{url('materiel')}}">
+            <i class="fa fa-suitcase"></i> 
+            <span>matériel</span></a>
+          </li>
 
           <li>
           <a href="{{url('parametre')}}">
@@ -148,10 +159,25 @@
                     </ul>
                     @endforeach
 
-                  </div>  
+                  </div> 
+
+                  
 
                   <strong><i class="margin-r-5"></i></strong>
                 <hr>
+                <div class="col-md-3">
+                  <strong><i class="fa fa-group  margin-r-5"></i>Contacts du projet</strong>                
+                 </div>
+                  <div class="col-md-9">
+                    @foreach($contacts as $contact)
+                    <ul>
+                        <li><a href="{{url('contacts/'.$contact->id.'/details')}}">{{ $contact->nom }} {{ $contact->prenom }}</a></li>
+                    </ul>
+                    @endforeach
+
+                  </div> 
+                   <strong><i class="margin-r-5"></i></strong>
+                <hr> 
                 @if($projet->lien)
                 <div class="row">
                 <div class="col-md-3">
